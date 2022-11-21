@@ -1,7 +1,12 @@
+import os
+
 from flask import Flask, jsonify
+
+from flagsmith.flagsmith import Flagsmith
 
 
 app = Flask(__name__)
+flagsmith = Flagsmith(environment_key=os.environ["FLAGSMITH_KEY"])
 
 games = [
     {"id": 1, "title": "Fallout: New Vegas", "price_usd": "4000"},
