@@ -10,7 +10,10 @@ SHOP_FLAG_NAME = "shop"
 
 
 app = Flask(__name__)
-flagsmith = Flagsmith(environment_key=os.environ["FLAGSMITH_KEY"])
+flagsmith = Flagsmith(
+    environment_key=os.environ["FLAGSMITH_KEY"],
+    enable_local_evaluation=True,
+)
 
 games = [
     {"id": 1, "title": "Fallout: New Vegas", "price_usd": "4000"},
