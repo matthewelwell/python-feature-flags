@@ -1,4 +1,5 @@
 import os
+import json
 
 from flask import Flask, jsonify
 
@@ -26,6 +27,20 @@ inventory = {
 
 @app.route("/games", methods=["GET"])
 def list_games():
+    flags = flagsmith.get_environment_flags()
+
+    try:
+        metadata = json.loads(flags.get_feature_value(SHOP_FLAG_NAME))
+        return jsonify(
+            sorted(
+                games,
+                key=lambda i: i[metadata["default_sort_field"]],
+                reverse=metadata["default_sort_direction"] == "desc",
+            )
+        )
+    except (TypeError, KeyError) as e:
+        pass
+
     return jsonify(games)
 
 
